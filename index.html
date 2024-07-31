@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORMATECH - ANDRES CARVAJAL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .news-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .news-item img {
+            max-width: 100px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .news-item .content {
+            flex-grow: 1;
+        }
+        .news-item .content h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .news-item .content p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Buscar por título...">
+        <div id="news-container"></div>
+    </div>
+
+    <script>
+        const info = [
+            {
+                titulo: "LA OBSESIÓN",
+                descripción: "¿Que es la Obsesion y que la genera?",
+                url: "/OBSESION",
+                IMG: "https://telegra.ph/file/bd087d15c0ce5efb5911d.jpg"
+            },
+        ];
+
+        const searchBar = document.getElementById('search-bar');
+        const newsContainer = document.getElementById('news-container');
+
+        function displayNews(newsArray) {
+            newsContainer.innerHTML = '';
+            newsArray.forEach(news => {
+                const newsItem = document.createElement('div');
+                newsItem.classList.add('news-item');
+                newsItem.innerHTML = `
+                    <img src="${news.IMG}" alt="${news.titulo}">
+                    <div class="content">
+                        <h3><a href="${news.url}" target="_blank">${news.titulo}</a></h3>
+                        <p>${news.descripción}</p>
+                    </div>
+                `;
+                newsContainer.appendChild(newsItem);
+            });
+        }
+
+        function filterNews() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const filteredNews = info.filter(news => 
+                news.titulo.toLowerCase().includes(searchTerm)
+            );
+            displayNews(filteredNews);
+        }
+
+        searchBar.addEventListener('input', filterNews);
+
+        // Display all news initially
+        displayNews(info);
+    </script>
+</body>
+</html>
